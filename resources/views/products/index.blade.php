@@ -14,19 +14,19 @@
                             </div>
                         @endif
 
-                        @if (auth()->user()->is_admin)
+                        {{-- @if (auth()->user()->is_admin)  --}}
                             <a href="{{ route('products.create') }}" class="btn btn-primary">Add new product</a>
                             <br /><br />
-                        @endif
+                        {{-- @endif --}}
 
                         <table class="table">
                             <tr>
                                 <th>Product name</th>
                                 <th>Price</th>
                                 <th>Price (EUR)</th>
-                                @if (auth()->user()->is_admin)
+                                {{-- @if (auth()->user()->is_admin)  --}}
                                 <th></th>
-                                @endif
+                                {{-- @endif  --}}
                             </tr>
                             @forelse ($products as $product)
                                 <tr>
@@ -34,7 +34,7 @@
                                     <td>{{ $product->price }}</td>
                                     <td>{{ $product->price_eur }}</td>
                                     <td>
-                                        @if (auth()->user()->is_admin)
+                                    {{--   @if (auth()->user()->is_admin)  --}}
                                             <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-info">Edit</a>
 
                                             <form action="{{ route('products.destroy', $product->id) }}"
@@ -43,7 +43,7 @@
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="submit" class="btn btn-sm btn-danger" value="Delete">
                                             </form>
-                                        @endif
+                                    {{--    @endif  --}}
                                         <a href="{{ route('products.cart', $product->id) }}" class="btn btn-sm btn-primary">Add to cart</a>
                                     </td>
                                 </tr>
