@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateProductRequest;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -15,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(10);
+        $products = Product::all();
 
         return view('products.index', compact('products'));
     }
@@ -27,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        //
     }
 
     /**
@@ -38,55 +37,51 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $product = Product::create($request->all());
+        //
+    }
 
-        if ($request->hasFile('photo')) {
-            $filename = $request->photo->getClientOriginalName();
-            $request->photo->storeAs('logos', $filename);
-            $product->update(['photo' => $filename]);
-        }
-
-        return redirect()->route('products.index');
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Product $product
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        return view('products.edit', compact('product'));
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateProductRequest  $request
-     * @param  Product  $product
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(Request $request, $id)
     {
-        $product->update($request->all());
-
-        return redirect()->route('products.index');
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Product  $product
+     * @param  int  $id
      * @return \Illuminate\Http\Response
-     *
-     * @throws \Exception
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        $product->delete();
-
-        return redirect()->route('products.index');
+        //
     }
-
 }
