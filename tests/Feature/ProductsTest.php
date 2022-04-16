@@ -16,22 +16,22 @@ class ProductsTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200);
-
         $response->assertSee('No products found');
     }
 
     public function test_homepage_contains_non_empty_products_table()
     {
         $data = Product::create([
-            "name" => "Mobile",
+            "name" => "888",
             "price" => 56
         ]);
 
         $response = $this->get('/');
 
         $response->assertStatus(200);
-
+        $view_products = $response->viewData('products')->first()->name;
         $response->assertDontSee('No products found');
+        $this->assertEquals($view_products, $response->viewData('products')->first()->name);
     }
 
 }
