@@ -30,8 +30,8 @@ class ProductsTest extends TestCase
 
         $response->assertStatus(200);
         $view_products = $response->viewData('products')->first()->name;
-        $response->assertDontSee('No products found');
-        $this->assertEquals($view_products, $response->viewData('products')->first()->name);
+        $this->assertEquals($view_products, $data->name);
     }
+
 
 }
