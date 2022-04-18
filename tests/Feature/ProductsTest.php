@@ -16,6 +16,7 @@ class ProductsTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200);
+        
         $response->assertSee('No products found');
     }
 
@@ -29,7 +30,9 @@ class ProductsTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200);
+
         $view_products = $response->viewData('products')->first()->name;
+
         $this->assertEquals($view_products, $data->name);
     }
 
