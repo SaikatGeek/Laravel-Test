@@ -9,7 +9,9 @@ class Product extends Model
 {
     protected $fillable = ['name', 'price'];
 
-    public function getPriceEurAttribute(){
+    public function getPriceEurAttribute()
+    {
         return (new CurrencyService)->convert($this->price, 'usd', 'eur');
     }
+
 }
