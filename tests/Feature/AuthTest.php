@@ -42,8 +42,18 @@ class AuthTest extends TestCase
         $response = $this->actingAs($user)->get('/');
 
         $response->assertStatus(200);
-        
+
         $response->assertSee('Products');
+    }
+
+    public function test_unauthenticate_user_cannot_access_products_table()
+    {
+        $response = $this->get('/');
+
+        $response->assertStatus(302);
+
+        $response->assertRedirect('/login');
+
     }
 
 
