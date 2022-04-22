@@ -36,5 +36,15 @@ class ProductsTest extends TestCase
         $this->assertEquals($view_products, $data->name);
     }
 
+    public function test_paginated_products_table_doesnt_show_11th_record()
+    {
+        $products = factory(Product::class, 11)->create([ 'price' => '99.99' ]);
+        info($products);
+
+        $response = $this->get('/');
+        
+        $response->assertDontSee($products->last()->name);
+    }
+
 
 }
