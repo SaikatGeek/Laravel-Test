@@ -32,6 +32,20 @@ class AuthTest extends TestCase
         $response->assertRedirect('/home');
     }
 
+    public function test_authenticate_user_can_access_products_table()
+    {
+        $user = factory(User::class)->create([
+                    'email' => 'test@laravel.com',
+                    'password' => bcrypt('test_phase_squad')
+                ]);
+
+        $response = $this->actingAs($user)->get('/');
+
+        $response->assertStatus(200);
+        
+        $response->assertSee('Products');
+    }
+
 
 
 
