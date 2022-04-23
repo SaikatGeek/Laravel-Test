@@ -2,18 +2,29 @@
 
 namespace Tests\Feature;
 
+use App\User; 
 use App\Product;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProductsTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function auth()
+    {
+        $user = factory(User::class)->create([
+            'email' => 'test@laravel.com',
+            'password' => bcrypt('test_phase_squad')
+        ]);
+
+        return $this->actingAs($user);
+    }
     
 
     public function test_homepage_contains_empty_products_table()
     {
-        $response = $this->get('/');
+        $response = $this->auth()->get('/');
 
         $response->assertStatus(200);
         
@@ -27,7 +38,7 @@ class ProductsTest extends TestCase
             "price" => 56
         ]);
 
-        $response = $this->get('/');
+        $response = $this->auth()->get('/');
 
         $response->assertStatus(200);
 
