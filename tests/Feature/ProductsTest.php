@@ -11,6 +11,20 @@ class ProductsTest extends TestCase
 {
     use RefreshDatabase;
 
+    private $authorized;
+
+    public function setUp():void
+    {
+        parent::setUp();
+
+        $user = factory(User::class)->create([
+            'email' => 'test@laravel.com',
+            'password' => bcrypt('test_phase_squad')
+        ]);
+
+        $this->authorized = $this->actingAs($user);
+    }
+
     public function auth()
     {
         $user = factory(User::class)->create([
@@ -24,7 +38,7 @@ class ProductsTest extends TestCase
 
     public function test_homepage_contains_empty_products_table()
     {
-        $response = $this->auth()->get('/');
+        $response = $this->authorized->get('/');
 
         $response->assertStatus(200);
         
@@ -38,7 +52,7 @@ class ProductsTest extends TestCase
             "price" => 56
         ]);
 
-        $response = $this->auth()->get('/');
+        $response = $this->authorized->get('/');
 
         $response->assertStatus(200);
 
