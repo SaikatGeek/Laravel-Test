@@ -11,7 +11,6 @@ class ProductsTest extends TestCase
 {
     use RefreshDatabase;
 
-
     public function authorized($is_admin = 0)
     {
         $user = factory(User::class)->create([
@@ -128,7 +127,7 @@ class ProductsTest extends TestCase
         $product = factory(Product::class)->create();
 
         $response = $this->authorized(1)->put('products/' . $product->id, [
-            'name' => "Test",
+            'name' => "test",
             'price' => 99.99
         ]);
 
@@ -142,12 +141,25 @@ class ProductsTest extends TestCase
         $product = factory(Product::class)->create();
 
         $response = $this->authorized(1)->put('products/' . $product->id, 
-        [ 'name' => "Test", 'price' => 99.99 ],
-        ['Accept' => 'Application/json']);
+            [ 'name' => "Test", 'price' => 99.99 ],
+            ['Accept' => 'Application/json']
+        );
 
         $response->assertStatus(422);
-
     }
 
+    public function test_delete_product_no_longer_exists_in_database()
+    {
+        $product = factory(Product::class)->create();
+
+        $this->assertEquals(1, Product::count());
+
+        $response = $this->authorized(1)->delete("products/{$product->id}");
+
+        $response->assertStatus(302);
+
+        $this->assertEquals(0, Product::count());
+
+    }
 
 }

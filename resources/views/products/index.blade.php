@@ -36,6 +36,13 @@
                                     @if (auth()->user()->is_admin)
                                         <td>
                                             <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-info">Edit</a>
+
+                                            <form action="{{ route('products.destroy', $product->id) }}"
+                                                  method="POST" onsubmit="return confirm('Are you sure?');" style="display: inline-block;">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                <input type="submit" class="btn btn-sm btn-danger" value="Delete">
+                                            </form>
                                         </td>
                                     @endif
                                 </tr>
