@@ -66,8 +66,18 @@ class ProductsTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertSee('Add new product');
-
     }
+
+    public function test_non_admin_user_cannot_see_product_create_button()
+    {
+        $response = $this->authorized(0)->get('/products');
+        
+        $response->assertStatus(200);
+
+        $response->assertDontSee('Add new product');
+    }
+
+    
 
 
 }
