@@ -14,7 +14,7 @@ class CurrencyTest extends TestCase
      *
      * @return void
      */
-    public function test_currency_convert_usd_to_eur()
+    public function test_currency_convert_usd_to_euro()
     {
         $amount_in_usd = 100;
 
