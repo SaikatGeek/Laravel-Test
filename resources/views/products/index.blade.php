@@ -17,7 +17,6 @@
                         @if (auth()->user()->is_admin)
                             <a href="{{ route('products.create') }}" class="btn btn-primary">Add new product</a>
                             <br /><br />
-                       
                         @endif
 
                         <table class="table">
@@ -25,16 +24,24 @@
                                 <th>Product name</th>
                                 <th>Price</th>
                                 <th>Price (EUR)</th>
+                                @if (auth()->user()->is_admin)
+                                <th></th>
+                                @endif
                             </tr>
                             @forelse ($products as $product)
                                 <tr>
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->price }}</td>
                                     <td>{{ $product->price_eur }}</td>
+                                    @if (auth()->user()->is_admin)
+                                        <td>
+                                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                        </td>
+                                    @endif
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3">No products found.</td>
+                                    <td colspan="4">No products found.</td>
                                 </tr>
                             @endforelse
                         </table>
