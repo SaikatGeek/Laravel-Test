@@ -91,5 +91,25 @@ class ProductsTest extends TestCase
         $response->assertStatus(403);
     }
 
+    public function test_store_product_exists_in_database()
+    {
+        $response = $this->authorized(1)->post('/products', [
+            'name' => 'Brand New Product',
+            'price' => 99.99
+        ]);
+
+        $response->assertRedirect('/products');
+
+        $this->assertDatabaseHas('products', [
+            'name' => 'Brand New Product',
+            'price' => 99.99
+        ]);
+
+        $product = Product::orderBy('id', 'desc')->first();
+
+        $this->assertEquals('Brand New Product', $product->name);
+        $this->assertEquals(99.99, $product->price);
+    }
+
 
 }
